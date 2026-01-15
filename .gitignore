@@ -1,0 +1,40 @@
+# Environment and configuration files
+.env
+.env.local
+.env.*.local
+*.env
+
+# Extension configuration (contains secrets)
+extension/config.js
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build files
+dist/
+build/
+*.log
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Zip files (build artifacts)
+*.zip

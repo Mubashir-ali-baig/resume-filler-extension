@@ -1,0 +1,30 @@
+# Icons (you'll need to add actual icon files)
+# icons/*.png
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build files
+dist/
+build/
+
+# Configuration files with secrets
+config.js
+.env
+.env.local
+.env.*.local
+
+# Zip files (build artifacts)
+*.zip
+
+# Chrome Web Store publishing guides (optional - remove if you want to keep them)
+PERMISSION_JUSTIFICATIONS.md
+ACCOUNT_SETUP.md
+CHROME_STORE_PUBLISHING.md

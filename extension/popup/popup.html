@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Filler</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Resume Filler</h1>
+        <p class="subtitle">AI Interview Assistant</p>
+      </div>
+
+      <!-- Auth Container (shown when not logged in) -->
+      <div id="authContainer" class="auth-container">
+        <!-- Sign In Form -->
+        <div id="signInForm" class="auth-form">
+          <h3>Sign In</h3>
+          <form id="signInFormElement">
+            <div class="form-group">
+              <label for="signInEmail">Email</label>
+              <input
+                type="email"
+                id="signInEmail"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="signInPassword">Password</label>
+              <input
+                type="password"
+                id="signInPassword"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <button type="submit" id="signInButton" class="auth-button">
+              Sign In
+            </button>
+            <p class="auth-toggle">
+              Don't have an account?
+              <a href="#" id="toggleToSignUp">Sign up</a>
+            </p>
+          </form>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div id="signUpForm" class="auth-form hidden">
+          <h3>Sign Up</h3>
+          <form id="signUpFormElement">
+            <div class="form-group">
+              <label for="signUpEmail">Email</label>
+              <input
+                type="email"
+                id="signUpEmail"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="signUpPassword">Password</label>
+              <input
+                type="password"
+                id="signUpPassword"
+                placeholder="••••••••"
+                minlength="6"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="signUpConfirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="signUpConfirmPassword"
+                placeholder="••••••••"
+                minlength="6"
+                required
+              />
+            </div>
+            <button type="submit" id="signUpButton" class="auth-button">
+              Sign Up
+            </button>
+            <p class="auth-toggle">
+              Already have an account?
+              <a href="#" id="toggleToSignIn">Sign in</a>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Main App Container (shown when logged in) -->
+      <div id="mainContainer" class="main-container hidden">
+        <!-- User Info Bar -->
+        <div class="user-info-bar">
+          <span id="userEmail" class="user-email"></span>
+          <div class="user-actions">
+            <button id="profileButton" class="icon-button" title="Edit Profile">
+              👤
+            </button>
+            <button id="signOutButton" class="icon-button" title="Sign Out">
+              🚪
+            </button>
+          </div>
+        </div>
+
+        <!-- Profile Section (collapsible) -->
+        <div id="profileSection" class="profile-section hidden">
+          <h3>Your Profile</h3>
+          <div class="form-group">
+            <label for="resumeFileInput">Resume (PDF or DOCX)</label>
+            <div class="file-upload-wrapper">
+              <input
+                type="file"
+                id="resumeFileInput"
+                accept=".pdf,.doc,.docx"
+                class="file-input"
+              />
+              <div class="file-info" id="resumeFileInfo">
+                <span class="file-name">No file selected</span>
+                <button
+                  type="button"
+                  class="file-remove"
+                  id="removeResumeFile"
+                  style="display: none"
+                >
+                  ✕
+                </button>
+              </div>
+              <div id="resumeFilePreview" class="file-preview"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="coverLetterFileInput">Cover Letter (PDF or DOCX)</label>
+            <div class="file-upload-wrapper">
+              <input
+                type="file"
+                id="coverLetterFileInput"
+                accept=".pdf,.doc,.docx"
+                class="file-input"
+              />
+              <div class="file-info" id="coverLetterFileInfo">
+                <span class="file-name">No file selected</span>
+                <button
+                  type="button"
+                  class="file-remove"
+                  id="removeCoverLetterFile"
+                  style="display: none"
+                >
+                  ✕
+                </button>
+              </div>
+              <div id="coverLetterFilePreview" class="file-preview"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="executiveSummaryTextArea">Executive Summary</label>
+            <textarea
+              id="executiveSummaryTextArea"
+              class="profile-textarea"
+              placeholder="Brief summary about yourself..."
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="profile-actions">
+            <button id="saveProfileButton" class="save-button">
+              💾 Save Profile
+            </button>
+            <button id="closeProfileButton" class="close-button">
+              ✕ Close
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+          <button id="scanButton" class="scan-button">
+            <span class="button-icon">🔍</span>
+            <span class="button-text">Scan Page</span>
+          </button>
+
+          <div id="status" class="status hidden"></div>
+
+          <div id="results" class="results hidden">
+            <div class="results-header">
+              <h3 id="contentTitle">Page Content:</h3>
+              <button
+                id="copyButton"
+                class="copy-button"
+                title="Copy all content"
+              >
+                📋 Copy
+              </button>
+            </div>
+            <div id="contentPreview" class="content-preview"></div>
+            <div id="contentStats" class="content-stats"></div>
+
+            <div id="formFieldsSection" class="form-fields-section hidden">
+              <h4>Form Fields</h4>
+              <div id="formFieldsList" class="form-fields-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load configuration first (config.js is gitignored, copy from config.example.js) -->
+    <script src="../config.js"></script>
+    <script src="../lib/backend-client.js"></script>
+    <script src="../lib/supabase-client.js"></script>
+    <script src="file-text-extractor.js"></script>
+    <script src="ai-service.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
